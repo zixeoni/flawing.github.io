@@ -73,14 +73,13 @@
         div.className = 'gallery-item';
         
         // 지연 로딩을 위한 HTML 구조 변경
-        if (isVideo(src)) {
-    // wing13.mp4에 대한 썸네일 파일이 wing13.jpg라고 가정할 때
-    const thumb = src.replace('.mp4', '.jpg'); 
-    div.innerHTML = `<video src="${src}" poster="${thumb}" muted playsinline loop preload="none"></video>`;
-        } else {
-            // loading="lazy"로 브라우저가 화면에 나타날 때 이미지를 로드하게 합니다.
-            div.innerHTML = `<img src="${src}" alt="Gallery Item" loading="lazy">`;
-        }
+       if (isVideo(src)) {
+    // 1. 영상 대신 썸네일 이미지(png/jpg)를 먼저 보여줌
+    // 2. 영상은 클릭 모달에서만 실행
+    div.innerHTML = `<img src="${src.replace('.mp4', '.jpg')}" alt="Thumbnail" loading="lazy">`;
+} else {
+    div.innerHTML = `<img src="${src}" alt="Gallery Item" loading="lazy">`;
+}
         
         div.onclick = () => openMediaModal(src);
         galleryContainer.appendChild(div);
